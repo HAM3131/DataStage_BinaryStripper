@@ -1,7 +1,7 @@
 # StripDSX
 # Purpose: Program to strip compiled segment from DataStage `.dsx` files
 # Author: Henry Manning
-# Version: 1.0
+# Version: 1.0.1
 
 import argparse
 import os
@@ -9,12 +9,15 @@ import os
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
 
-    "question" is a string that is presented to the user.
-    "default" is the presumed answer if the user just hits <Enter>.
-            It must be "yes" (the default), "no" or None (meaning
-            an answer is required of the user).
+    param: question
+        string presented to user
+    param: default
+        The presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
 
-    The "answer" return value is True for "yes" or False for "no".
+    return: True/False
+        True for a "yes", False for a "no"
     """
     valid = {'yes': True, 'y': True, 'ye': True, 'no': False, 'n': False}
     if default is None:
@@ -36,6 +39,13 @@ def query_yes_no(question, default="yes"):
             print("Please respond with 'yes' or 'no' " "(or 'y' or 'n').\n")
 
 def strip_file(args):
+    """Strip a file of all contents following the delimiter (if present)
+
+    param: args
+        Namespace from parsed command line arguments
+    
+    return: None
+    """
     # Alias args
     path = args.filename
     delimiter = args.delimiter
@@ -63,6 +73,13 @@ def strip_file(args):
         print(f'{path} is not a file. Use `-r` to use recursive mode')
 
 def strip_dir(args):
+    """Strip all files contained within a directory and its subdirectories
+
+    param: args
+        Namespace from parsed command line arguments
+
+    return: None
+    """
     # Alias args
     path = args.filename
     strip = args.force
@@ -90,6 +107,11 @@ def strip_dir(args):
         print(f'{path} is not a directory')
 
 def parse_args():
+    """Define an argument parser from argparse and return the resulting namespace
+
+    return: parsed_args
+        Namespace with values reflecting flags set by command line arguments
+    """
     # Define the argparser
     parser = argparse.ArgumentParser(
                     prog='StripDSX',
@@ -126,6 +148,11 @@ def parse_args():
     return parsed_args
 
 def main():
+    """Run the program
+
+    return: status
+        0 for a success and 1 if any errors are encountered
+    """
     status = 0
 
     # Parse command line arguments
